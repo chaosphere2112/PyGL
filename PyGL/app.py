@@ -8,9 +8,13 @@ class Application(object):
 		GLUT.glutInitWindowSize(*size)
 		self.win_id = GLUT.glutCreateWindow(title)
 		GLUT.glutDisplayFunc(self.display)
+
 		if mouse:
 			self.mouse_pos = (0,0)
+			GLUT.glutMotionFunc(self.move_mouse)
+			GLUT.glutPassiveMotionFunc(self.move_mouse)
 			GLUT.glutMouseFunc(self.mouse)
+
 		if fullscreen:
 			GLUT.glutFullScreen()
 
@@ -19,6 +23,10 @@ class Application(object):
 
 	def display(self):
 		pass
+
+	def move_mouse(self, x, y):
+		self.mouse_pos = (x, y)
+		self.move()
 
 	def mouse(self, button, state, x, y):
 		self.mouse_pos = (x, y)
@@ -40,6 +48,9 @@ class Application(object):
 				self.middle_release()
 			else:
 				raise ValueError("Unknown button %s released" % str(button))
+
+	def move(self):
+		pass
 
 	def left_click(self):
 		pass
